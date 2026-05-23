@@ -1,0 +1,31 @@
+{% extends "Book_logs/base.html" %}
+
+{% block header %}
+<h1>Books</h1>
+
+{% endblock header %}
+
+
+{% block content %}
+
+
+<ul>
+{% for Book in Books%}
+<li>
+    <h3>
+    <a href="{% url 'Book_logs:BookDetail' Book.id%}">{{Book.title}}</a>
+    </h3>
+</li>
+
+
+
+{% empty %}
+<li>No Books have been added yet.</li>
+{% endfor %}
+</ul>
+
+<h3>
+<a href="{% url 'Book_logs:new_Book' %}">Add a new Book</a>
+</h3>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "Book_logs/base.html"  %}
+{% block content %}
+<p>Add a new Book:</p>
+<form action="{% url 'Book_logs:new_Book' %}" method='post'>
+
+{% csrf_token %}
+{{ form.as_p }}
+<button name="submit">add Book</button><br>
+
+</form>
+
+
+
+{% endblock content %}
+
