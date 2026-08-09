@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b82ka%9*$oslc6x(m&697vl#3-$d62*s37'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.15', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,19 +37,61 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'allauth',
+            
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth',
+
+    'corsheaders',
+
     'Book_logs',
     'users',
-    'bootstrap3'
+    
+    
+    
+
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_ID=1
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_PERMISSION_CLASSES':[
+
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication'
+
+
+
+    ],
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
+
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
 ]
 
 ROOT_URLCONF = 'Book_log.urls'
@@ -124,25 +166,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-BOOTSTRAP3 ={
 
-    'include_jquery': True,
-
-}
 
 if os.getcwd() == '/app':
     import dj_database_url
     DATABASES = {
 
 
-        'default':dj_database_url.config(default='postgres://localhost)')
+        'default':dj_database_url.config(default='postgres://localhost')
 
     }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-ALLOWED_HOSTS = ['*']
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 
 STATIC_ROOT = 'staticfiles'
 

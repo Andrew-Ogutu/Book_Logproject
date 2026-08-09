@@ -7,7 +7,61 @@
 
 
 {% block content %}
+<div class ="container">
 
+    <h2>My Books</h2>
+
+        <!-- Search Form -->
+    <div class ="search-container">
+
+        <form method="GET" action="" class="search-form">
+
+            <div class = "search-wrapper" >
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search books by title,author"
+                    value="{{ search_query }}"
+                    class="search-bar"
+                >
+                <button type="submit" class="search-btn">
+
+                </button>
+
+                {% if search_query %}
+                    <a href="{% url 'Book_logs:Books' %}" class="clear-btn"></a>
+
+                {% endif %}
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+{% if search_query %}
+    <p class="results-count" >
+        Found {{ Books|length }} book{{ Books|pluralize }} for "{{ search_query}}
+
+        </p>
+
+
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
 
 <ul>
 {% for Book in Books%}
@@ -20,7 +74,15 @@
 
 
 {% empty %}
-<li>No Books have been added yet.</li>
+<li>
+    {% if search_query %}
+        No books found matching your Description "{{ search_query }}"
+    {% else %}
+
+    No Books have been added yet.
+
+    {% endif %}
+</li>
 {% endfor %}
 </ul>
 

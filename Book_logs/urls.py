@@ -1,13 +1,11 @@
-from django.urls import path
-from . import views
-app_name = 'Book_logs'
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter
+from .views import BookViewset
 
-urlpatterns =[
+router = DefaultRouter()
+router.register(r'books',BookViewset,basename='book')
 
-    #Home page
-    path('',views.index, name='index'),
-    path('Books/',views.Books, name='Books'),
-    path('Books/<int:Book_id>/',views.BookDetail, name='BookDetail'),
-    path('new_Book/',views.new_Book, name='new_Book'),
+urlpatterns = [
+    path('' ,include(router.urls)),
 
 ]

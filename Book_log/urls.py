@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-app_name = 'Book_logs'
-app_name='users'
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(title='Book_logsAPI')
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/',include('users.urls',namespace='users')),
-    path('',include('Book_logs.urls',namespace='Book_logs')),
-
+    path('api/v1/', include('Book_logs.urls')),
+    path('api-auth', include('rest_framework.urls')),
+    path('api/v1/rest-auth/', include('dj_rest_auth.urls')),
+    path('registration/', include('dj_rest_auth.registration.urls')),
+    path('schema/',schema_view)
+   
 ]
